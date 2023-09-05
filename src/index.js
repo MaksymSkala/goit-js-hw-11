@@ -19,89 +19,74 @@ function clearGallery() {
     gallery.innerHTML = '';
 }
 
-function fetchImages(query, pageNum) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await axios.get(BASE_URL, {
-                params: {
-                    key: API_KEY,
-                    q: query,
-                    image_type: 'photo',
-                    orientation: 'horizontal',
-                    safesearch: true,
-                    page: pageNum,
-                    per_page: 40,
-                },
-            });
+async function fetchImages(query, pageNum) {
+    try {
+        const response = await axios.get(BASE_URL, {
+            params: {
+                key: API_KEY,
+                q: query,
+                image_type: 'photo',
+                orientation: 'horizontal',
+                safesearch: true,
+                page: pageNum,
+                per_page: 40,
+            },
+        });
 
-            const { data } = response;
-            const { hits, totalHits } = data;
+        const { data } = response;
+        const { hits, totalHits } = data;
 
-            if (hits.length === 0) {
-                await showMessageWithPromise('Sorry, there are no images matching your search query. Please try again.', 3000);
-                reject(new Error('No images found'));
-                return;
-            }
-
-            hits.forEach((image) => {
-                const photoCard = document.createElement('div');
-                photoCard.classList.add('photo-card');
-
-                const img = document.createElement('img');
-                img.src = image.webformatURL;
-                img.alt = image.tags;
-                img.loading = 'lazy';
-
-                const info = document.createElement('div');
-                info.classList.add('info');
-
-                const likes = document.createElement('p');
-                likes.classList.add('info-item');
-                likes.innerHTML = `<b>Likes:</b> ${image.likes}`;
-
-                const views = document.createElement('p');
-                views.classList.add('info-item');
-                views.innerHTML = `<b>Views:</b> ${image.views}`;
-
-                const comments = document.createElement('p');
-                comments.classList.add('info-item');
-                comments.innerHTML = `<b>Comments:</b> ${image.comments}`;
-
-                const downloads = document.createElement('p');
-                downloads.classList.add('info-item');
-                downloads.innerHTML = `<b>Downloads:</b> ${image.downloads}`;
-
-                info.appendChild(likes);
-                info.appendChild(views);
-                info.appendChild(comments);
-                info.appendChild(downloads);
-
-                photoCard.appendChild(img);
-                photoCard.appendChild(info);
-
-                gallery.appendChild(photoCard);
-            });
-
-            // Відображення повідомлення за допомогою проміса
-            showMessageWithPromise(`Hooray! We found ${totalHits} images.`, 3000).then(() => {
-                resolve();
-            });
-
-            loadMoreButton.style.display = 'block';
-        } catch (error) {
-            console.error('Error fetching images:', error);
-            reject(error);
+        if (hits.length === 0) {
+            await showMessageWithPromise('Sorry, there are no images matching your search query. Please try again.', 3000);
+            return;
         }
-    });
+
+        hits.forEach((image) => {
+            const photoCard = document.createElement('div');
+            photoCard.classList.add('photo-card');
+
+            const img = document.createElement('img');
+            img.src = image.webformatURL;
+            img.alt = image.tags;
+            img.loading = 'lazy';
+
+            const info = document.createElement('div');
+            info.classList.add('info');
+
+            const likes = document.createElement('p');
+            likes.classList.add('info-item');
+            likes.innerHTML = `<b>Likes:</b> ${image.likes}`;
+
+            const views = document.createElement('p');
+            views.classList.add('info-item');
+            views.innerHTML = `<b>Views:</b> ${image.views}`;
+
+            const comments = document.createElement('p');
+            comments.classList.add('info-item');
+            comments.innerHTML = `<b>Comments:</b> ${image.comments}`;
+
+            const downloads = document.createElement('p');
+            downloads.classList.add('info-item');
+            downloads.innerHTML = `<b>Downloads:</b> ${image.downloads}`;
+
+            info.appendChild(likes);
+            info.appendChild(views);
+            info.appendChild(comments);
+            info.appendChild(downloads);
+
+            photoCard.appendChild(img);
+            photoCard.appendChild(info);
+
+            gallery.appendChild(photoCard);
+        });
+
+        alert(`Hooray! We found ${totalHits} images.`);
+
+        loadMoreButton.style.display = 'block';
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
 }
-
-// Пошук при завантаженні сторінки
-window.addEventListener('load', () => {
-    // Очистити галерею при завантаженні сторінки
-    clearGallery();
-
-    searchImages('landscape'); // Приклад пошуку за замовчуванням
-});
 
 function showMessageWithPromise(messageText, duration) {
     return new Promise((resolve, reject) => {
