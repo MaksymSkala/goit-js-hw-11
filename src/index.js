@@ -95,12 +95,13 @@ function fetchImages(query, pageNum) {
     });
 }
 
-window.onload = () => {
+// Пошук при завантаженні сторінки
+window.addEventListener('load', () => {
     // Очистити галерею при завантаженні сторінки
     clearGallery();
 
     searchImages('landscape'); // Приклад пошуку за замовчуванням
-};
+});
 
 function showMessageWithPromise(messageText, duration) {
     return new Promise((resolve, reject) => {
