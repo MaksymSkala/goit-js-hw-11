@@ -49,3 +49,29 @@
   .info-item b {
     margin-right: 5px;
   }
+
+  .info {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Додаємо обгортання для інфо-елементів */
+  }
+  
+  .info-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Додатковий відступ між елементами інформації */
+  }
+  
+  .info-item b {
+    margin-right: 5px;
+  }
