@@ -95,6 +95,12 @@ function fetchImages(query, pageNum) {
     });
 }
 
+window.onload = () => {
+    // Очистити галерею при завантаженні сторінки
+    clearGallery();
+
+    searchImages('landscape'); // Приклад пошуку за замовчуванням
+};
 
 function showMessageWithPromise(messageText, duration) {
     return new Promise((resolve, reject) => {
