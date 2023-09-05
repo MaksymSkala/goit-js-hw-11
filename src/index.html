@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Search</title>
-  <!-- Підключаємо стилі для SimpleLightbox -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.8.0/simplelightbox.min.css">
-  <!-- Підключаємо ваші стилі CSS (необов'язково) -->
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplelightbox@2.8.0/dist/simplelightbox.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js" type="module"></script>
 </head>
 <body>
-  <header>
-    <h1>Image Search</h1>
-  </header>
-  <main>
-    <!-- Форма для пошуку -->
-    <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
-      <button type="submit">Search</button>
-    </form>
+    <header>
+        <h1></h1>
+    </header>
+    <main>
+        <form class="search-form" id="search-form">
+            <input
+                type="text"
+                name="searchQuery"
+                autocomplete="off"
+                placeholder="Search images..."
+            />
+            <button type="submit">Search</button>
+        </form>
+        <div class="gallery">
+            <!-- Картки зображень будуть рендеритися тут -->
+        </div>
+        <button type="button" class="load-more">Load more</button>
+    </main>
 
-    <!-- Галерея для відображення знайдених зображень -->
-    <div class="gallery">
-      <!-- Картки зображень будуть додаватися тут -->
-    </div>
-
-    <!-- Кнопка "Load more" для пагінації -->
-    <button type="button" class="load-more">Load more</button>
-  </main>
-
-  <!-- Підключаємо бібліотеку SimpleLightbox та ваш JavaScript код -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.8.0/simple-lightbox.min.js"></script>
-  <script type="module" src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simplelightbox@2.8.0/dist/simple-lightbox.min.js"></script>
+    
 </body>
 </html>
