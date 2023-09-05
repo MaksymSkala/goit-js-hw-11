@@ -9,29 +9,18 @@
     <script src="index.js" type="module"></script>
 </head>
 <body>
-    <header>
-        <h1></h1>
-    </header>
-    <main>
-        <form class="search-form" id="search-form">
-            <input
-                type="text"
-                name="searchQuery"
-                autocomplete="off"
-                placeholder="Search images..."
-            />
-            <button type="submit">Search</button>
-        </form>
-        <div class="gallery">
-            <!-- Картки зображень будуть рендеритися тут -->
-        </div>
-        <button type="button" class="load-more">Load more</button>
-        <div class="gallery">
-          <a href="images/image1.jpg"><img src="images/thumbs/thumb1.jpg" alt="" title=""/></a>
-          <a href="images/image2.jpg"><img src="images/thumbs/thumb2.jpg" alt="" title="Beautiful Image"/></a>
-          <!-- Додайте інші картки сюди -->
-        </div>
-    </main>
+  <div class="container">
+    <h1>Image Search App</h1>
+    <form class="search-form" id="search-form">
+      <input
+        type="text"
+        name="searchQuery"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+      <button type="submit">Search</button>
+    </form>
+  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simplelightbox@2.8.0/dist/simple-lightbox.min.js"></script>

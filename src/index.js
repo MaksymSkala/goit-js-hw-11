@@ -1,134 +1,73 @@
-import axios from 'axios';
-import SimpleLightbox from 'simplelightbox';
+const form = document.getElementById("search-form");
+const gallery = document.querySelector(".gallery");
+const loadMoreBtn = document.querySelector(".load-more");
 
-const form = document.getElementById('search-form');
-const gallery = document.querySelector('.gallery');
-const loadMoreButton = document.querySelector('.load-more');
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const searchQuery = e.target.searchQuery.value;
+  // Очистити галерею перед новим пошуком
+  gallery.innerHTML = "";
 
-const API_KEY = '39263242-9a9e6029252b757da1c0dfd4b';
-const BASE_URL = 'https://pixabay.com/api/';
+  const apiKey = "39263242-9a9e6029252b757da1c0dfd4b";
+  const baseUrl = "https://pixabay.com/api/";
+  const perPage = 20;
+  let page = 1;
 
-const lightbox = new SimpleLightbox('.gallery a');
-
-let page = 1; // Початкова сторінка
-let currentQuery = ''; // Поточний запит
-
-function clearGallery() {
-    gallery.innerHTML = '';
-}
-
-async function fetchImages(query, pageNum) {
+  const fetchImages = async () => {
     try {
-        const response = await axios.get(BASE_URL, {
-            params: {
-                key: API_KEY,
-                q: query,
-                image_type: 'photo',
-                orientation: 'horizontal',
-                safesearch: true,
-                page: pageNum,
-                per_page: 40,
-            },
-        });
-
-        const { data } = response;
-        const { hits, totalHits } = data;
-
-        if (hits.length === 0) {
-            // Відобразити повідомлення, що нічого не знайдено
-            return;
-        }
-
-        // Рендерити кожну картку зображення
-        hits.forEach((image) => {
-            const photoCard = document.createElement('div');
-            photoCard.classList.add('photo-card');
-
-            const img = document.createElement('img');
-            img.src = image.webformatURL;
-            img.alt = image.tags;
-            img.loading = 'lazy';
-
-            const info = document.createElement('div');
-            info.classList.add('info');
-
-            const likes = document.createElement('p');
-            likes.classList.add('info-item');
-            likes.innerHTML = `<b>Likes:</b> ${image.likes}`;
-
-            const views = document.createElement('p');
-            views.classList.add('info-item');
-            views.innerHTML = `<b>Views:</b> ${image.views}`;
-
-            const comments = document.createElement('p');
-            comments.classList.add('info-item');
-            comments.innerHTML = `<b>Comments:</b> ${image.comments}`;
-
-            const downloads = document.createElement('p');
-            downloads.classList.add('info-item');
-            downloads.innerHTML = `<b>Downloads:</b> ${image.downloads}`;
-
-            info.appendChild(likes);
-            info.appendChild(views);
-            info.appendChild(comments);
-            info.appendChild(downloads);
-
-            photoCard.appendChild(img);
-            photoCard.appendChild(info);
-
-            gallery.appendChild(photoCard);
-        });
-
-        // Відобразити повідомлення про кількість знайдених зображень
-        alert(`Hooray! We found ${totalHits} images.`);
-
-        // Включити кнопку "Load more"
-        loadMoreButton.style.display = 'block';
+      const response = await fetch(
+        `${baseUrl}?key=${apiKey}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`
+      );
+      const data = await response.json();
+      return data.hits;
     } catch (error) {
-        console.error('Error fetching images:', error);
+      console.error("Error fetching images:", error);
+      return [];
     }
-}
+  };
 
-function searchImages(query) {
-    if (query.trim() === '') {
-        return;
+  const renderImages = async () => {
+    const images = await fetchImages();
+    // Перевірка на наявність зображень
+    if (images.length === 0) {
+      gallery.innerHTML = '<p class="no-results">No results found.</p>';
+      return;
     }
 
-    // Очистити галерею при новому пошуку
-    clearGallery();
+    images.forEach((image) => {
+      const imageCard = document.createElement("div");
+      imageCard.classList.add("photo-card");
+      imageCard.innerHTML = `
+        <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+        <div class="info">
+          <p class="info-item"><b>Likes:</b> ${image.likes}</p>
+          <p class="info-item"><b>Views:</b> ${image.views}</p>
+          <p class="info-item"><b>Comments:</b> ${image.comments}</p>
+          <p class="info-item"><b>Downloads:</b> ${image.downloads}</p>
+        </div>
+      `;
+      gallery.appendChild(imageCard);
+    });
 
-    // Почати з першої сторінки
-    page = 1;
+    // Показати кнопку "Load more"
+    loadMoreBtn.style.display = "block";
+  };
 
-    // Запам'ятати поточний запит
-    currentQuery = query;
+  // Завантажити та відобразити зображення
+  renderImages();
 
-    // Виконати HTTP-запит та рендерити зображення
-    fetchImages(query, page);
-}
-
-function loadMoreImages() {
-    // Збільшити номер сторінки на 1
-    page++;
-
-    // Виконати HTTP-запит та додати наступну групу зображень до галереї
-    fetchImages(currentQuery, page);
-}
-
-// Обробники подій
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const query = e.target.searchQuery.value;
-    searchImages(query);
+  page++; // Збільшити номер сторінки
 });
 
-loadMoreButton.addEventListener('click', loadMoreImages);
-
-var lightbox = new SimpleLightbox('.gallery a', {
-    /* Опції для галереї */
+loadMoreBtn.addEventListener("click", () => {
+    renderImages(); // Завантажити і відобразити більше зображень
+    page++; // Збільшити номер сторінки
   });
 
-// Пошук при завантаженні сторінки
-window.addEventListener('load', () => {
-    searchImages('landscape'); // Приклад пошуку за замовчуванням
+  import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+const lightbox = new SimpleLightbox(".photo-card img", {
+  captionsData: "alt",
+  captionDelay: 250,
 });
