@@ -5,7 +5,7 @@ const form = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
 const loadMoreButton = document.querySelector('.load-more');
 
-const API_KEY = 'YOUR_PIXABAY_API_KEY';
+const API_KEY = '39263242-9a9e6029252b757da1c0dfd4b';
 const BASE_URL = 'https://pixabay.com/api/';
 
 const lightbox = new SimpleLightbox('.gallery a');
