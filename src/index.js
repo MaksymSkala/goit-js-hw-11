@@ -1,78 +1,105 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("#search-form");
-    const gallery = document.querySelector(".gallery");
-    const loadMoreBtn = document.querySelector(".load-more");
-  
-    let page = 1; // Початкова сторінка
-    let searchQuery = ""; // Початковий пустий рядок пошуку
-  
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      page = 1; // Скидаємо сторінку до початкового значення
-      searchQuery = e.target.searchQuery.value.trim();
-      gallery.innerHTML = ""; // Очищуємо галерею перед новим пошуком
-      await fetchImages();
-    });
-  
-    async function fetchImages() {
-      try {
-        const apiKey = "39263242-9a9e6029252b757da1c0dfd4b";
-        const response = await fetch(
-          `https://pixabay.com/api/?key=${apiKey}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
-        );
-  
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-  
-        const data = await response.json();
-        const images = data.hits;
-  
-        if (images.length === 0) {
-          gallery.innerHTML = '<p class="error-message">Sorry, there are no images matching your search query. Please try again.</p>';
-          return;
-        }
-  
-        images.forEach((image) => {
-          const card = document.createElement("div");
-          card.classList.add("photo-card");
-          card.innerHTML = `
-            <a href="${image.largeImageURL}" class="lightbox">
-              <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
-            </a>
-            <div class="info">
-              <p class="info-item"><b>Likes:</b> ${image.likes}</p>
-              <p class="info-item"><b>Views:</b> ${image.views}</p>
-              <p class="info-item"><b>Comments:</b> ${image.comments}</p>
-              <p class="info-item"><b>Downloads:</b> ${image.downloads}</p>
-            </div>
-          `;
-          gallery.appendChild(card);
-        });
-  
-        // Ініціалізуємо SimpleLightbox
-        const lightbox = new SimpleLightbox(".lightbox", {
-          captionsData: "alt",
-          captionDelay: 250,
-        });
-  
-        if (images.length < 40) {
-          loadMoreBtn.style.display = "none";
-        } else {
-          loadMoreBtn.style.display = "block";
-        }
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
+const BASE_URL = 'https://pixabay.com/api/';
+const API_KEY = '39263242-9a9e6029252b757da1c0dfd4b';
+
+// Отримання посилань на форму, галерею та кнопку "Load more"
+const searchForm = document.querySelector('#search-form');
+const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
+
+// Ініціалізація SimpleLightbox для галереї
+const lightbox = new SimpleLightbox('.gallery a');
+
+// Ініціалізація поточної сторінки для пагінації
+let currentPage = 1;
+
+// Обробник події для пошуку зображень
+searchForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const searchQuery = e.target.elements.searchQuery.value.trim();
+
+  if (!searchQuery) {
+    alert('Please enter a search query');
+    return;
+  }
+
+  try {
+    // Виконання HTTP-запиту до API Pixabay з параметром q
+    const response = await fetch(
+      `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=1`
+    );
+
+    if (!response.ok) {
+      throw new Error('Error fetching images');
     }
-  
-    loadMoreBtn.addEventListener("click", async function () {
-      page += 1; // Збільшуємо сторінку для завантаження наступної групи зображень
-      await fetchImages();
-      // Прокручуємо сторінку
-      window.scrollBy({
-        top: gallery.clientHeight,
-        behavior: "smooth",
-      });
+
+    const data = await response.json();
+
+    // Очищення галереї перед новими зображеннями
+    gallery.innerHTML = '';
+
+    // Відображення знайдених зображень
+    data.hits.forEach((image) => {
+      const galleryItem = document.createElement('a');
+      galleryItem.href = image.largeImageURL;
+      galleryItem.setAttribute('data-lightbox', 'gallery');
+      galleryItem.innerHTML = `<img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />`;
+      gallery.appendChild(galleryItem);
     });
-  });
+
+    // Оновлення SimpleLightbox
+    lightbox.refresh();
+
+    // Пагінація: показ кнопки "Load more"
+    if (data.hits.length < 20) {
+      loadMoreBtn.style.display = 'none';
+    } else {
+      loadMoreBtn.style.display = 'block';
+    }
+
+    // Скидання поточної сторінки
+    currentPage = 1;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    alert('Error fetching images. Please try again.');
+  }
+});
+
+// Обробник події для кнопки "Load more"
+loadMoreBtn.addEventListener('click', async () => {
+  currentPage++;
+
+  try {
+    const searchQuery = searchForm.elements.searchQuery.value.trim();
+
+    const response = await fetch(
+      `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${currentPage}`
+    );
+
+    if (!response.ok) {
+      throw new Error('Error fetching images');
+    }
+
+    const data = await response.json();
+
+    // Додавання нових зображень до галереї
+    data.hits.forEach((image) => {
+      const galleryItem = document.createElement('a');
+      galleryItem.href = image.largeImageURL;
+      galleryItem.setAttribute('data-lightbox', 'gallery');
+      galleryItem.innerHTML = `<img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />`;
+      gallery.appendChild(galleryItem);
+    });
+
+    // Оновлення SimpleLightbox
+    lightbox.refresh();
+
+    // Пагінація: приховання кнопки "Load more" на останній сторінці
+    if (data.hits.length < 20) {
+      loadMoreBtn.style.display = 'none';
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    alert('Error fetching images. Please try again.');
+  }
+});

@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Search App</title>
-    
-    <link rel="stylesheet" href="styles.css">
-    <script src="index.js" type="module"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Search</title>
+  <!-- Підключаємо стилі для SimpleLightbox -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.8.0/simplelightbox.min.css">
+  <!-- Підключаємо ваші стилі CSS (необов'язково) -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="gallery">
-    <h1>Image Search App</h1>
+  <header>
+    <h1>Image Search</h1>
+  </header>
+  <main>
+    <!-- Форма для пошуку -->
     <form class="search-form" id="search-form">
       <input
         type="text"
@@ -18,12 +22,20 @@
         autocomplete="off"
         placeholder="Search images..."
       />
-      <button type="button" class="load-more">Load more</button>
+      <button type="submit">Search</button>
     </form>
-  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simplelightbox@2.8.0/dist/simple-lightbox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.8.0/simple-lightbox.min.js"></script>
+    <!-- Галерея для відображення знайдених зображень -->
+    <div class="gallery">
+      <!-- Картки зображень будуть додаватися тут -->
+    </div>
+
+    <!-- Кнопка "Load more" для пагінації -->
+    <button type="button" class="load-more">Load more</button>
+  </main>
+
+  <!-- Підключаємо бібліотеку SimpleLightbox та ваш JavaScript код -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.8.0/simple-lightbox.min.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
