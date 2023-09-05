@@ -124,6 +124,10 @@ form.addEventListener('submit', (e) => {
 
 loadMoreButton.addEventListener('click', loadMoreImages);
 
+var lightbox = new SimpleLightbox('.gallery a', {
+    /* Опції для галереї */
+  });
+
 // Пошук при завантаженні сторінки
 window.addEventListener('load', () => {
     searchImages('landscape'); // Приклад пошуку за замовчуванням
