@@ -2,9 +2,8 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 картки в ряду */
     gap: 20px;
-  }
+  }  
   
-  /* Стилі для кожної картки зображення */
   .photo-card {
     position: relative;
     overflow: hidden;
@@ -15,7 +14,7 @@
   }
   
   .photo-card:hover {
-    transform: scale(1.05); /* Збільшити картку при наведенні */
+    transform: scale(1.05);
   }
   
   .photo-card img {
@@ -25,7 +24,6 @@
     vertical-align: middle;
   }
   
-  /* Стилі для інформації про зображення */
   .info {
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -61,7 +59,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Додаємо обгортання для інфо-елементів */
+    flex-wrap: wrap;
   }
   
   .info-item {
@@ -69,7 +67,7 @@
     padding: 0;
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Додатковий відступ між елементами інформації */
+    margin-right: 10px;
   }
   
   .info-item b {
@@ -95,7 +93,7 @@ input[type="text"] {
     border: none;
     border-radius: 5px;
     margin-right: 10px;
-    font-size: 16px; /* Розмір шрифту для інпуту */
+    font-size: 16px;
 }
 
 button[type="submit"] {
@@ -105,7 +103,7 @@ button[type="submit"] {
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
-    font-size: 16px; /* Розмір шрифту для кнопки */
+    font-size: 16px;
 }
 
 button[type="submit"]:hover {
