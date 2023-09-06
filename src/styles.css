@@ -75,3 +75,39 @@
   .info-item b {
     margin-right: 5px;
   }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px; /* Розмір шрифту для інпуту */
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007acc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px; /* Розмір шрифту для кнопки */
+}
+
+button[type="submit"]:hover {
+    background-color: #005f99;
+}
