@@ -14,7 +14,6 @@ const lightbox = new SimpleLightbox('.gallery a');
 
 let page = 1;
 let currentQuery = '';
-let totalPages = 0; // Додайте змінну totalPages
 
 function clearGallery() {
     gallery.innerHTML = '';
@@ -38,13 +37,10 @@ async function fetchImages(query, pageNum) {
         const { hits, totalHits } = data;
 
         if (hits.length === 0) {
+
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return;
         }
-
-        // Оновіть totalPages на основі загальної кількості зображень та кількості зображень на сторінці
-        const imagesPerPage = 40;
-        totalPages = Math.ceil(totalHits / imagesPerPage);
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
@@ -83,15 +79,12 @@ async function fetchImages(query, pageNum) {
             photoCard.appendChild(info);
 
             gallery.appendChild(photoCard);
+            loadMoreButton.style.display = 'block';
         });
 
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 
-        if (pageNum === totalPages) {
-            loadMoreButton.style.display = 'none'; // Приховуємо кнопку на останній сторінці
-        } else {
-            loadMoreButton.style.display = 'block'; // Відображаємо кнопку на інших сторінках
-        }
+        loadMoreButton.style.display = 'block';
     } catch (error) {
         console.error('Error fetching images:', error);
     }
@@ -125,5 +118,6 @@ form.addEventListener('submit', (e) => {
 loadMoreButton.addEventListener('click', loadMoreImages);
 
 window.addEventListener('load', () => {
-    searchImages('landscape');
+    
 });
+
