@@ -34,18 +34,6 @@ async function fetchImages(query, pageNum) {
             },
         });
 
-        
-// Додайте цей код у функцію loadMoreImages
-function loadMoreImages() {
-    page++;
-    fetchImages(currentQuery, page);
-
-    // Перевірка, чи потрібно приховати кнопку "Load more"
-    if (page === totalPages) {
-        loadMoreButton.style.display = 'none';
-    }
-}
-
         const { data } = response;
         const { hits, totalHits } = data;
 
