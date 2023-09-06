@@ -43,22 +43,7 @@ async function fetchImages(query, pageNum) {
         }
 
         totalPages = Math.ceil(totalHits / 40);
-        loadMoreButton.style.display = 'block'; // Показуємо кнопку після завантаження даних
-
-        hits.forEach((image) => {
-            // ...
-        });
-
-        // Перевірка тут, після отримання totalPages
-        if (page >= totalPages) {
-            loadMoreButton.style.display = 'none';
-        }
-
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-    } catch (error) {
-        console.error('Error fetching images:', error);
-    }
-}
+        loadMoreButton.style.display = 'block';
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
@@ -97,12 +82,13 @@ async function fetchImages(query, pageNum) {
             photoCard.appendChild(info);
 
             gallery.appendChild(photoCard);
-            loadMoreButton.style.display = 'block';
         });
 
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-
-        loadMoreButton.style.display = 'block';
+        
+        if (page >= totalPages) {
+            loadMoreButton.style.display = 'none';
+        }
     } catch (error) {
         console.error('Error fetching images:', error);
     }
@@ -126,7 +112,6 @@ function loadMoreImages() {
     page++;
     fetchImages(currentQuery, page);
 
-    // Перевірка, чи потрібно приховати кнопку "Load more"
     if (totalPages > 0 && page === totalPages) {
         loadMoreButton.style.display = 'none';
     }
@@ -143,4 +128,3 @@ loadMoreButton.addEventListener('click', loadMoreImages);
 window.addEventListener('load', () => {
     
 });
-
