@@ -55,9 +55,12 @@ async function fetchImages(query, pageNum) {
         if (page >= totalPages) {
             loadMoreButton.style.display = 'none';
         }
-    } catch (error) {
-        console.error('Error fetching images:', error);
-    }
+
+        try {
+            // Ваш код для отримання даних
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
 }
 
         hits.forEach((image) => {
