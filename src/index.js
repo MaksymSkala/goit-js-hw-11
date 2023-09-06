@@ -37,7 +37,6 @@ async function fetchImages(query, pageNum) {
         const { hits, totalHits } = data;
 
         if (hits.length === 0) {
-
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return;
         }
@@ -119,3 +118,9 @@ loadMoreButton.addEventListener('click', loadMoreImages);
 window.addEventListener('load', () => {
     searchImages('landscape');
 });
+
+// Додаємо галерею і кнопку "Load more" до DOM
+const main = document.querySelector('main');
+main.appendChild(gallery);
+main.appendChild(loadMoreButton);
+main.appendChild(message);
