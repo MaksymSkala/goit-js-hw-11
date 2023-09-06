@@ -49,20 +49,16 @@ async function fetchImages(query, pageNum) {
             // ...
         });
 
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-        
         // Перевірка тут, після отримання totalPages
         if (page >= totalPages) {
             loadMoreButton.style.display = 'none';
         }
 
-        try {
-            // Ваш код для отримання даних
-        } catch (error) {
-            console.error('Error fetching images:', error);
-        }
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
 }
-
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
             photoCard.classList.add('photo-card');
