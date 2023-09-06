@@ -79,6 +79,7 @@ async function fetchImages(query, pageNum) {
             photoCard.appendChild(info);
 
             gallery.appendChild(photoCard);
+            loadMoreButton.style.display = 'block';
         });
 
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
