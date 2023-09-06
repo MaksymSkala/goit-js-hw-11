@@ -13,6 +13,7 @@ const BASE_URL = 'https://pixabay.com/api/';
 const lightbox = new SimpleLightbox('.gallery a');
 
 let page = 1;
+let totalPages = 0;
 let currentQuery = '';
 
 function clearGallery() {
@@ -32,6 +33,19 @@ async function fetchImages(query, pageNum) {
                 per_page: 40,
             },
         });
+
+        totalPages = Math.ceil(totalHits / 40); // Розрахунок загальної кількості сторінок
+
+// Додайте цей код у функцію loadMoreImages
+function loadMoreImages() {
+    page++;
+    fetchImages(currentQuery, page);
+
+    // Перевірка, чи потрібно приховати кнопку "Load more"
+    if (page === totalPages) {
+        loadMoreButton.style.display = 'none';
+    }
+}
 
         const { data } = response;
         const { hits, totalHits } = data;
