@@ -42,6 +42,12 @@ async function fetchImages(query, pageNum) {
             return;
         }
 
+        if (pageNum === totalPages) {
+            loadMoreButton.style.display = 'none';
+        } else {
+            loadMoreButton.style.display = 'block';
+        }
+
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
             photoCard.classList.add('photo-card');
