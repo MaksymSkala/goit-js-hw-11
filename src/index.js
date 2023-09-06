@@ -34,8 +34,7 @@ async function fetchImages(query, pageNum) {
             },
         });
 
-        totalPages = Math.ceil(totalHits / 40); // Розрахунок загальної кількості сторінок
-
+        
 // Додайте цей код у функцію loadMoreImages
 function loadMoreImages() {
     page++;
@@ -55,6 +54,8 @@ function loadMoreImages() {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return;
         }
+
+        totalPages = Math.ceil(totalHits / 40);
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
