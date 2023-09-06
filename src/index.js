@@ -117,5 +117,5 @@ form.addEventListener('submit', (e) => {
 loadMoreButton.addEventListener('click', loadMoreImages);
 
 window.addEventListener('load', () => {
-    searchImages('landscape');
+    
 });
