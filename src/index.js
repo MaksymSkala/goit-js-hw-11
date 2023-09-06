@@ -59,6 +59,7 @@ async function fetchImages(query, pageNum) {
         console.error('Error fetching images:', error);
     }
 }
+
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
             photoCard.classList.add('photo-card');
