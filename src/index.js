@@ -38,12 +38,27 @@ async function fetchImages(query, pageNum) {
         const { hits, totalHits } = data;
 
         if (hits.length === 0) {
-
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return;
         }
 
         totalPages = Math.ceil(totalHits / 40);
+        loadMoreButton.style.display = 'block'; // Показуємо кнопку після завантаження даних
+
+        hits.forEach((image) => {
+            // ...
+        });
+
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        
+        // Перевірка тут, після отримання totalPages
+        if (page >= totalPages) {
+            loadMoreButton.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
+}
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
