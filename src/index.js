@@ -42,11 +42,16 @@ async function fetchImages(query, pageNum) {
             return;
         }
 
-        if (pageNum === totalPages) {
-            loadMoreButton.style.display = 'none';
-        } else {
-            loadMoreButton.style.display = 'block';
-        }
+        const imagesPerPage = 40; // Кількість зображень на сторінці
+const totalImages = totalHits; // Загальна кількість зображень з відповіді API
+const totalPages = Math.ceil(totalImages / imagesPerPage);
+
+// Встановлюємо стиль display для кнопки "Load more"
+if (pageNum === totalPages) {
+    loadMoreButton.style.display = 'none'; // Приховуємо кнопку на останній сторінці
+} else {
+    loadMoreButton.style.display = 'block'; // Відображаємо кнопку на інших сторінках
+}
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
