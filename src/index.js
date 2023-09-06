@@ -110,6 +110,11 @@ function searchImages(query) {
 function loadMoreImages() {
     page++;
     fetchImages(currentQuery, page);
+
+    // Перевірка, чи потрібно приховати кнопку "Load more"
+    if (totalPages > 0 && page === totalPages) {
+        loadMoreButton.style.display = 'none';
+    }
 }
 
 form.addEventListener('submit', (e) => {
