@@ -59,6 +59,16 @@ async function fetchImages(query, pageNum) {
         console.error('Error fetching images:', error);
     }
 }
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        
+        // Перевірка тут, після отримання totalPages
+        if (page >= totalPages) {
+            loadMoreButton.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
+}
 
         hits.forEach((image) => {
             const photoCard = document.createElement('div');
