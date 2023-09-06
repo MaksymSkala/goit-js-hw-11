@@ -113,3 +113,18 @@ button[type="submit"]:hover {
 #load-more-button {
   display: none;
 }
+
+.load-more {
+  padding: 10px 20px;
+    background-color: #007acc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.load-more:hover {
+  background-color: #005f99;
+}
